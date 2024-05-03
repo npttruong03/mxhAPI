@@ -40,4 +40,6 @@ public interface UserService extends UserDetailsService {
     Boolean existsByEmail(String email);
 
     Boolean existsByUsername(String username);
+    
+    List<User> findByUser(String keyword);
 }

@@ -10,9 +10,9 @@ import java.util.List;
 public interface FriendService {
     List<UserInfoResponse> listFriendSuggestions(Long userId);
 
-    void addFriend(Long idSource, Long idTarget);
+    String addFriend(Long idSource, Long idTarget);
 
-    void removeFriend(Long idSource, Long idTarget);
+    String removeFriend(Long idSource, Long idTarget);
 
     List<FriendResponse> getAll(Long id);
 

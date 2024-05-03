@@ -1,5 +1,6 @@
 package com.viuniteam.socialviuni.repository;
 
+import com.viuniteam.socialviuni.dto.response.image.ImageResponse;
 import com.viuniteam.socialviuni.entity.Image;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -11,7 +12,6 @@ import javax.transaction.Transactional;
 public interface ImageRepository extends JpaRepository<Image,Long> {
     Image findOneById(Long id);
     Image save(Image image);
-
     void deleteById(Long id);
 
     @Modifying

@@ -225,4 +225,17 @@ public class PostServiceImpl implements PostService {
         notificationService.createNotification(user,post.getAuthor().getLastName()+" "+post.getAuthor().getFirstName()+" đã thêm mới bài viết: "
                 + ShortContent.convertToShortContent(post.getContent()),notificationFollow);
     }
+
+	@Override
+	public Page<PostResponse> getAll(Pageable pageable) {
+            Page<Post> posts = postRepository.getAll(pageable);
+            List<PostResponse> postResponseList = new ArrayList<>();
+            posts.stream().forEach(post -> {
+                if(checkPrivacy(post,profile)){
+                    PostResponse postResponse = postResponseUtils.convert(post);
+                    postResponseList.add(postResponse);
+                }
+            });
+            return new PageImpl<>(postResponseList, pageable, postResponseList.size());
+	}
 }

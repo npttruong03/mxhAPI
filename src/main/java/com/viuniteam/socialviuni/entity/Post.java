@@ -24,8 +24,7 @@ public class Post extends BaseEntity{
 
     @Column
     private Integer privacy; /* 1-cong khai 2-ban be 3- chi minh toi*/
-
-
+    
     @OneToMany(mappedBy = "post",cascade = CascadeType.REMOVE) // cascadetype.all la xoa post thi all cmt cx bi xoa nhe
     private List<Comment> comments=new ArrayList<>();
 

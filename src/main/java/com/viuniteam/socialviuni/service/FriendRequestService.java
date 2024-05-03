@@ -11,9 +11,9 @@ import java.util.List;
 public interface FriendRequestService {
     void save(FriendRequest friendRequest);
 
-    void addFriendRequest(Long idTarget);
+    String addFriendRequest(Long idTarget);
 
-    void removeFriendRequest(Long idTarget);
+    String removeFriendRequest(Long idTarget);
 
     boolean isFriendRequest(Long idSource,Long idTarget);
 

@@ -2,6 +2,9 @@ package com.viuniteam.socialviuni.security.jwt;
 
 import java.io.Serializable;
 
+import lombok.Data;
+
+
 public class JwtResponse implements Serializable {
     private final String jwtToken;
 

@@ -333,4 +333,9 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toList());
     }
 
+	@Override
+	public List<User> findByUser(String keyword) {
+		return userRepository.findByUser(keyword);
+	}
+
 }

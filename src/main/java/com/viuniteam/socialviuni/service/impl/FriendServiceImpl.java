@@ -56,7 +56,7 @@ public class FriendServiceImpl implements FriendService {
     }
 
     @Override
-    public void addFriend(Long idSource, Long idTarget) {
+    public String addFriend(Long idSource, Long idTarget) {
 
         if(this.itIsMe(idSource,idTarget))
             throw new BadRequestException("Không thể kết bạn với chính mình");
@@ -101,10 +101,11 @@ public class FriendServiceImpl implements FriendService {
             */
 //            throw new OKException("Kết bạn thành công");
         }
+        throw new OKException("kết bạn thành công");
     }
 
     @Override
-    public void removeFriend(Long idSource, Long idTarget) {
+    public String removeFriend(Long idSource, Long idTarget) {
 
         if(this.itIsMe(idSource,idTarget))
             throw new BadRequestException("Không thể hủy kết bạn với chính mình");

@@ -39,7 +39,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
     }
 
     @Override
-    public void addFriendRequest(Long idTarget) {
+    public String addFriendRequest(Long idTarget) {
         Long idSource = profile.getId();
         if(friendService.isFriend(idSource,idTarget))
             throw new BadRequestException("Đã kết bạn rồi");
@@ -101,7 +101,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
     }
 
     @Override
-    public void removeFriendRequest(Long idTarget) {
+    public String removeFriendRequest(Long idTarget) {
         Long idSource = profile.getId();
         if(friendService.isFriend(idSource,idTarget))
             throw new BadRequestException("Đã kết bạn rồi");

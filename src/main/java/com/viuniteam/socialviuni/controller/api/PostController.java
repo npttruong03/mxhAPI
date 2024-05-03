@@ -21,8 +21,8 @@ public class PostController {
     private final PostService postService;
     private final Profile profile;
     @PostMapping
-    public PostResponse savePost(@Valid @RequestBody PostSaveRequest postSaveRequest){
-        return postService.save(postSaveRequest);
+    public ResponseEntity<PostResponse> savePost(@Valid @RequestBody PostSaveRequest postSaveRequest){
+        return ResponseEntity.ok(postService.save(postSaveRequest));
     }
     @PostMapping("/update/{id}") // update post
     public ResponseEntity<PostResponse> updatePost(@PathVariable("id") Long idPost,@RequestBody @Valid PostSaveRequest postSaveRequest){
@@ -63,5 +63,12 @@ public class PostController {
     @PostMapping("/search")
     public ResponseEntity<Page<PostResponse>> search(@RequestBody PostFilterRequest postFilterRequest){
         return ResponseEntity.ok(postService.search(postFilterRequest));
+    }
+    
+    @PostMapping("/get/All")
+    public ResponseEntity<Page<PostResponse>> getAll(@RequestBody PageInfo pageInfo) {
+    	PageRequest pageRequest = PageRequest.of(pageInfo.getIndex(), pageInfo.getSize());
+    	Page<PostResponse> posts = postService.getAll(pageRequest);
+    	return ResponseEntity.ok(posts);
     }
 }

@@ -16,9 +16,9 @@ public interface PostService {
     PostResponse update(Long id,PostSaveRequest postSaveRequest);
     void delete(Long id);
     Page<PostResponse> findAllByUserId(Long userId, Pageable pageable);
+    Page<PostResponse> getAll(Pageable pageable);
 
     Page<PostResponse> search(PostFilterRequest postFilterRequest);
-
     PostResponse findOneById(Long id);
     void autoCreatePost(String content, List<Image> images);
     boolean myPost(Long postId);

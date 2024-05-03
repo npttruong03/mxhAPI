@@ -6,6 +6,7 @@ import com.viuniteam.socialviuni.utils.PageInfo;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,24 +18,29 @@ import java.util.List;
 public class FriendRequestController {
     private final FriendRequestService friendRequestService;
 
-    @PostMapping("/add/{id}")
-    public void addFriendRequest(@PathVariable("id") Long idTarget){
-        friendRequestService.addFriendRequest(idTarget);
-    }
-
-    @PostMapping("/remove/{id}")
-    public void removeFriendRequest(@PathVariable("id") Long idTarget){
-        friendRequestService.removeFriendRequest(idTarget);
-    }
-
-//    @GetMapping("/getall")
-//    public List<FriendRequestResponse> getAllFriendRequest(){
-//        return friendRequestService.getAll();
+//    @PostMapping("/add/{id}")
+//    public void addFriendRequest(@PathVariable("id") Long idTarget){
+//        friendRequestService.addFriendRequest(idTarget);
 //    }
-
-    @PostMapping
-    public Page<FriendRequestResponse> getAllFriendRequest(@RequestBody PageInfo pageInfo){
-        PageRequest pageRequest = PageRequest.of(pageInfo.getIndex(), pageInfo.getSize());
-        return friendRequestService.getAllByUser(pageRequest);
+    
+    @GetMapping("/add/{id}")
+    public ResponseEntity<String> addFriendRequest(@PathVariable("id") Long idTarget) {
+        return ResponseEntity.ok(friendRequestService.addFriendRequest(idTarget));
     }
+
+    @GetMapping("/remove/{id}")
+    public ResponseEntity<String> removeFriendRequest(@PathVariable("id") Long idTarget){
+        return ResponseEntity.ok().body(friendRequestService.removeFriendRequest(idTarget));
+    }
+
+    @GetMapping("/getall")
+    public ResponseEntity<List<FriendRequestResponse>> getAllFriendRequest(){
+        return ResponseEntity.ok(friendRequestService.getAll());
+    }
+
+//    @PostMapping
+//    public Page<FriendRequestResponse> getAllFriendRequest(@RequestBody PageInfo pageInfo){
+//        PageRequest pageRequest = PageRequest.of(pageInfo.getIndex(), pageInfo.getSize());
+//        return friendRequestService.getAllByUser(pageRequest);
+//    }
 }

@@ -32,7 +32,7 @@ public class LikeServiceImpl implements LikeService {
     private final NotificationRepository notificationRepository;
     protected final NotificationPostRepository notificationPostRepository;
     @Override
-    public void like(Long postId) {
+    public String like(Long postId) {
         Post post = postRepository.findOneById(postId);
         if(post == null || !post.getAuthor().isActive()) throw new ObjectNotFoundException("Bài viết không tồn tại");
         User user = userService.findOneById(profile.getId());

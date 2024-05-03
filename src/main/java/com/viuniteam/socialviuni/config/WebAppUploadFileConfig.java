@@ -18,11 +18,11 @@ public class WebAppUploadFileConfig {
     @Bean
     public Cloudinary cloudinary(){
         Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
-                "cloud_name", "viuni",
-                "api_key","859339928167792",
-                "api_secret","kymzmnSE8RlImfbEkaL3P5OMsVs",
+                "cloud_name", "doeiwein1",
+                "api_key","593628465349715",
+                "api_secret","FKRpbNh3APrjnFLhEEDkYPPOVXY",
                 "secure",true
-        ));
+        ));	
         return cloudinary;
     }
 }

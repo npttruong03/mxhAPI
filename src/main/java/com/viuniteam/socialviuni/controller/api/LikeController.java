@@ -12,8 +12,8 @@ public class LikeController {
     private final LikeService likeService;
 
     @PostMapping("/{postId}")
-    public void like(@PathVariable("postId") Long postId){
-        likeService.like(postId);
+    public ResponseEntity<String> like(@PathVariable("postId") Long postId){
+        return ResponseEntity.ok(likeService.like(postId));
     }
 
 //    @GetMapping("/count/{postId}")

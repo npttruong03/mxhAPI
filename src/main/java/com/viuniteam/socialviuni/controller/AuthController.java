@@ -4,6 +4,7 @@ import com.viuniteam.socialviuni.dto.request.browser.BrowserSaveRequest;
 import com.viuniteam.socialviuni.dto.request.user.UserRecoveryPasswordRequest;
 import com.viuniteam.socialviuni.dto.request.user.UserSaveRequest;
 import com.viuniteam.socialviuni.entity.User;
+import com.viuniteam.socialviuni.entity.jwtInfo;
 import com.viuniteam.socialviuni.exception.ObjectNotFoundException;
 import com.viuniteam.socialviuni.security.JwtTokenUtil;
 import com.viuniteam.socialviuni.security.jwt.JwtRequest;
@@ -12,6 +13,7 @@ import com.viuniteam.socialviuni.service.BrowserService;
 import com.viuniteam.socialviuni.service.UserService;
 import lombok.AllArgsConstructor;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,6 +25,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -57,7 +61,15 @@ public class AuthController {
             browserService.save(browserSaveRequest);
         }
         // return token
-        return ResponseEntity.ok(new JwtResponse(token));
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(HttpHeaders.SET_COOKIE, token.toString());
+        LoggedInfo loggedInfo = new LoggedInfo();
+        jwtInfo jwtInfo = new jwtInfo();
+        loggedInfo.setToken(token);
+        jwtInfo.setToken(token);
+        loggedInfo.setUsername(authenticationRequest.getUsername());
+//        return ResponseEntity.ok(new JwtResponse(token));
+        return ResponseEntity.ok().headers(headers).body(loggedInfo);
     }
     @PostMapping("/recovery")
     public void recoveryPassword(@Valid @RequestBody UserRecoveryPasswordRequest userRecoveryPasswordRequest){
@@ -86,5 +98,33 @@ public class AuthController {
 	  public ResponseEntity<?> logoutUser() {
 	    ResponseCookie cookie = jwtTokenUtil.getCleanJwtCookie();
 	    return ResponseEntity.ok("Logout OK");
+	  }
+	  
+	  class LoggedInfo {
+		  String token;
+		  List<String> role;
+		  String username;
+
+		public String getToken() {
+			return token;
+		}
+		public void setToken(String token) {
+			this.token = token;
+		}
+		public List<String> getRole() {
+			return role;
+		}
+		public void setRole(List<String> roles) {
+			this.role = roles;
+		}
+		public String getUsername() {
+			return username;
+		}
+		public void setUsername(String username) {
+			this.username = username;
+		}
+		
+		
+		  
 	  }
 }

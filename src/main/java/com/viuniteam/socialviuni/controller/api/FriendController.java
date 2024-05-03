@@ -8,46 +8,47 @@ import com.viuniteam.socialviuni.utils.PageInfo;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/friends/")
+@RequestMapping("/friends")
 public class FriendController {
     private final FriendService friendService;
     private final Profile profile;
 
-//    @PostMapping("/add/{id}")
-//    public void addFriend(@PathVariable("id") Long idTarget){
-//        friendService.addFriend(profile.getId(),idTarget);
-//    }
-
-    @PostMapping("/remove/{id}")
-    public void removeFriend(@PathVariable("id") Long idTarget){
-        friendService.removeFriend(profile.getId(),idTarget);
+    @GetMapping("/add/{id}")
+    public ResponseEntity<String> addFriend(@PathVariable("id") Long idTarget){
+        return ResponseEntity.ok(friendService.addFriend(profile.getId(),idTarget));
     }
-//    @GetMapping("/getall/{id}")
-//    public List<FriendResponse> getAllFriend(@PathVariable("id") Long id){
-//        return friendService.getAll(id);
-//    }
 
-//    @GetMapping("/getall/me")
-//    public List<FriendResponse>getAllMyFriend(){
-//        return friendService.getAll(profile.getId());
-//    }
+    @GetMapping("/remove/{id}")
+    public ResponseEntity<String> removeFriend(@PathVariable("id") Long idTarget){
+        return ResponseEntity.ok(friendService.removeFriend(profile.getId(),idTarget));
+    }
+    @GetMapping("/getall/{id}")
+    public ResponseEntity<List<FriendResponse>> getAllFriend(@PathVariable("id") Long id){
+        return ResponseEntity.ok(friendService.getAll(id));
+    }
 
-    @PostMapping("/getall/{id}")
-    public Page<FriendResponse> getAllFriend(@PathVariable("id") Long id, @RequestBody PageInfo pageInfo){
-        PageRequest pageRequest = PageRequest.of(pageInfo.getIndex(), pageInfo.getSize());
-        return friendService.getAllByUserId(id,pageRequest);
+    @GetMapping("/getall/me")
+    public ResponseEntity<List<FriendResponse>> getAllMyFriend(){
+        return ResponseEntity.ok(friendService.getAll(profile.getId()));
     }
-    @PostMapping("/getall/me")
-    public Page<FriendResponse>getAllMyFriend(@RequestBody PageInfo pageInfo){
-        PageRequest pageRequest = PageRequest.of(pageInfo.getIndex(), pageInfo.getSize());
-        return friendService.getAllByUserId(profile.getId(),pageRequest);
-    }
+
+//    @PostMapping("/getall/{id}")
+//    public Page<FriendResponse> getAllFriend(@PathVariable("id") Long id, @RequestBody PageInfo pageInfo){
+//        PageRequest pageRequest = PageRequest.of(pageInfo.getIndex(), pageInfo.getSize());
+//        return friendService.getAllByUserId(id,pageRequest);
+//    }
+//    @PostMapping("/getall/me")
+//    public Page<FriendResponse>getAllMyFriend(@RequestBody PageInfo pageInfo){
+//        PageRequest pageRequest = PageRequest.of(pageInfo.getIndex(), pageInfo.getSize());
+//        return friendService.getAllByUserId(profile.getId(),pageRequest);
+//    }
 
     @PostMapping("/friend-suggestion")
     public List<UserInfoResponse> getListFriendSuggestion(){
